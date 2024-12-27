@@ -1,12 +1,11 @@
-import Hello from "../components/hello";
+import React from "react";
 
-export default function Home() {
-  console.log("What am i?")
-
+const page = () => {
   return (
-    <> <h2 className="text-3xl">Welcome bro</h2>
-       <Hello />
+    <>
+      <h1 className="text-2xl">HOME</h1>
     </>
-
   );
-}
+};
+
+export default page;
