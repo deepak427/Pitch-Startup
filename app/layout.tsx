@@ -54,7 +54,7 @@ const workSans = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Pitch Startup",
+  title: "YC Directory",
   description: "Pitch, Vote and Grow",
 };
 
@@ -65,7 +65,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={workSans.variable}>{children}</body>
+      <body className={workSans.variable}>
+        {children}
+      </body>
     </html>
   );
 }
