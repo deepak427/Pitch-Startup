@@ -1,6 +1,8 @@
 import React from "react";
 import SearchForm from "@/components/SearchForm";
-import StartupCard from "@/components/StartupCard";
+import StartupCard, { StartupTypeCard } from "@/components/StartupCard";
+import { STARTUPS_QUERY } from "@/sanity/lib/queries";
+import { sanityFetch } from "@/sanity/lib/live";
 
 const Home = async ({
   searchParams,
@@ -8,20 +10,10 @@ const Home = async ({
   searchParams: Promise<{ query?: string }>;
 }) => {
   const query = (await searchParams).query;
+  const params = { search: query || null };
 
-  const posts = [
-    {
-      _createdAt: new Date(),
-      views: 55,
-      auther: { _id: 1, name: 'Deepak' },
-      _id: 1,
-      desciption: "This is a description",
-      image:
-        "https://spectrum.ieee.org/media-library/image.png?id=26772500&width=1200&height=842",
-      category: "Robots",
-      title: "We Robots",
-    },
-  ];
+  const { data: posts } = await sanityFetch({ query: STARTUPS_QUERY, params });
+  console.log(JSON.stringify(posts, null, 2));
 
   return (
     <>
@@ -45,12 +37,15 @@ const Home = async ({
         </p>
 
         <ul className="mt-7 card_grid">
-          {posts?.length > 0 && (
-            posts.map((post: StartupCardType, index: number) => (
+          {posts?.length > 0 ? (
+            posts.map((post: StartupTypeCard) => (
               <StartupCard key={post?._id} post={post} />
             ))
+          ) : (
+            <p className="no-results">No startups found</p>
           )}
         </ul>
+
       </section>
     </>
   );
